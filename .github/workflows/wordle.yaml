@@ -5,12 +5,16 @@ on:
     - cron: '30 6 * * *'
   workflow_dispatch:
 
+env:
+  SLACK_HOOK: ${{ secrets.SLACK_HOOK }}
+
 jobs:
   slack-wordle:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - run: |
-          ANSWER=$(TZ=HST curl "https://wordle.dallin.pro/?date=$(date +'%m/%d/%Y')")
-          NUMBER=$(TZ=HST curl --head --silent "https://wordle.dallin.pro/?date=$(date +'%m/%d/%Y')" | grep x-days-from | awk '{print $2}')
-          echo "$NUMBER: $ANSWER"
+          ANSWER=$(curl --silent "https://wordle.dallin.pro/?date=$(TZ=HST date +'%m/%d/%Y')")
+          NUMBER=$(curl --silent --head "https://wordle.dallin.pro/?date=$(TZ=UTC date +'%m/%d/%Y')" | grep x-days-from | awk '{print $2}' | tr -d '\r')
+
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Wordle '"$NUMBER"' - ?????"}' $SLACK_HOOK
