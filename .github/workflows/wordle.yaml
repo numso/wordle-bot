@@ -1,0 +1,17 @@
+name: Post Slack Wordle
+
+on:
+  schedule:
+    - cron: '30 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  slack-wordle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: |
+          date
+          echo $(date)
+          date +"%m/%d/%Y"
+          echo $(date +"%m/%d/%Y")
