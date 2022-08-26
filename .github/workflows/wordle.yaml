@@ -13,4 +13,4 @@ jobs:
       - run: |
           ANSWER=$(TZ=HST curl "https://wordle.dallin.pro/?date=$(date +'%m/%d/%Y')")
           NUMBER=$(TZ=HST curl --head --silent "https://wordle.dallin.pro/?date=$(date +'%m/%d/%Y')" | grep x-days-from | awk '{print $2}')
-          echo '$NUMBER: $ANSWER'
+          echo "$NUMBER: $ANSWER"
