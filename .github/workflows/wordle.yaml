@@ -11,7 +11,6 @@ jobs:
     timeout-minutes: 5
     steps:
       - run: |
-          date
-          echo $(date)
-          date +"%m/%d/%Y"
-          echo $(date +"%m/%d/%Y")
+          ANSWER=$(TZ=HST curl "https://wordle.dallin.pro/?date=$(date +'%m/%d/%Y')")
+          NUMBER=$(TZ=HST curl --head --silent "https://wordle.dallin.pro/?date=$(date +'%m/%d/%Y')" | grep x-days-from | awk '{print $2}')
+          echo '$NUMBER: $ANSWER'
