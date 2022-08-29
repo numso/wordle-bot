@@ -17,7 +17,7 @@ jobs:
           ANSWER=$(curl --silent "https://wordle.dallin.pro/?date=$(TZ=HST date +'%m/%d/%Y')")
           NUMBER=$(curl --silent --head "https://wordle.dallin.pro/?date=$(TZ=UTC date +'%m/%d/%Y')" | grep x-days-from | awk '{print $2}' | tr -d '\r')
 
-          MSG=$(curl --silent -H "Authorization: Bearer $SLACK_TOKEN" "https://slack.com/api/conversations.history?channel=$CHANNEL" | jq -c '[.messages[] | select(.bot_id == "$BOT_ID")][0]')
+          MSG=$(curl --silent -H "Authorization: Bearer $SLACK_TOKEN" "https://slack.com/api/conversations.history?channel=$CHANNEL" | jq -c "[.messages[] | select(.bot_id == \"$BOT_ID\")][0]")
           echo "MSG IS: $MSG"
 
           ANSWER_DATA='{"text":'$(echo $MSG | jq '.text' | sed "s/?????/$ANSWER/")',"channel":"'$CHANNEL'","ts":'$(echo $MSG | jq '.ts')'}'
