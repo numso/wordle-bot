@@ -1,0 +1,30 @@
+name: Debug Initial Message
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        required: true
+        type: choice
+        options:
+          - '#wordle-test C040V2HQCQ0'
+          - '#wordle C02U5D1MYKY'
+      number:
+        required: true
+        type: text
+
+env:
+  SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+  BOT_ID: 'B03VB855JSY'
+
+jobs:
+  slack-wordle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: |
+          NUMBER=${{ inputs.number }}
+          CHANNEL=$(echo "${{ inputs.channel }}" | awk '{print $2}')
+
+          QUESTION_DATA='{"text":"Wordle '"$NUMBER"' - ?????","channel":"'$CHANNEL'"}'
+          curl --silent -X POST -H "Content-type: application/json; charset=utf-8" -H "Authorization: Bearer $SLACK_TOKEN" --data "$QUESTION_DATA" "https://slack.com/api/chat.postMessage"
