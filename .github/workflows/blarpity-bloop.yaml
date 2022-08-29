@@ -20,6 +20,12 @@ jobs:
           NUMBER=$(curl --silent --head "https://wordle.dallin.pro/?date=$(TZ=UTC date +'%m/%d/%Y')" | grep x-days-from | awk '{print $2}' | tr -d '\r')
           echo "NUMBER IS: $NUMBER"
 
+          echo "URL IS: https://slack.com/api/conversations.history?channel=$CHANNEL"
+
+          BLAH=$(curl --silent -H "Authorization: Bearer $SLACK_TOKEN" "https://slack.com/api/conversations.history?channel=$CHANNEL")
+          echo $?
+          echo $BLAH
+
           MSG=$(curl --silent -H "Authorization: Bearer $SLACK_TOKEN" "https://slack.com/api/conversations.history?channel=$CHANNEL" | jq -c '[.messages[] | select(.bot_id == "$BOT_ID")][0]')
           echo "MSG IS: $MSG"
 
