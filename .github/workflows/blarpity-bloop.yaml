@@ -20,11 +20,11 @@ jobs:
           NUMBER=$(curl --silent --head "https://wordle.dallin.pro/?date=$(TZ=UTC date +'%m/%d/%Y')" | grep x-days-from | awk '{print $2}' | tr -d '\r')
           echo "NUMBER IS: $NUMBER"
 
-          # MSG=$(curl --silent -H "Authorization: Bearer $SLACK_TOKEN" "https://slack.com/api/conversations.history?channel=$CHANNEL" | jq -c '[.messages[] | select(.bot_id == "$BOT_ID")][0]')
-          # echo "MSG IS: $MSG"
+          MSG=$(curl --silent -H "Authorization: Bearer $SLACK_TOKEN" "https://slack.com/api/conversations.history?channel=$CHANNEL" | jq -c '[.messages[] | select(.bot_id == "$BOT_ID")][0]')
+          echo "MSG IS: $MSG"
 
-          # ANSWER_DATA='{"text":'$(echo $MSG | jq '.text' | sed "s/?????/$ANSWER/")',"channel":"'$CHANNEL'","ts":'$(echo $MSG | jq '.ts')'}'
-          # curl --silent -X POST -H 'Content-type: application/json; charset=utf-8' -H "Authorization: Bearer $SLACK_TOKEN" --data $ANSWER_DATA "https://slack.com/api/chat.update"
+          ANSWER_DATA='{"text":'$(echo $MSG | jq '.text' | sed "s/?????/$ANSWER/")',"channel":"'$CHANNEL'","ts":'$(echo $MSG | jq '.ts')'}'
+          curl --silent -X POST -H 'Content-type: application/json; charset=utf-8' -H "Authorization: Bearer $SLACK_TOKEN" --data "$ANSWER_DATA" "https://slack.com/api/chat.update"
 
           QUESTION_DATA='{"text":"Wordle '"$NUMBER"' - ?????","channel":"'$CHANNEL'"}'
           echo "QUESTION IS: $QUESTION_DATA"
