@@ -1,4 +1,4 @@
-name: Debug Initial Message
+name: Debug - Answer
 
 on:
   workflow_dispatch:
