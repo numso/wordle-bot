@@ -29,5 +29,5 @@ jobs:
           QUESTION_DATA='{"text":"Wordle '"$NUMBER"' - ?????","channel":"'$CHANNEL'"}'
           echo "QUESTION IS: $QUESTION_DATA"
 
-          curl --silent -X POST -H "Content-type: application/json; charset=utf-8" -H "Authorization: Bearer $SLACK_TOKEN" --data $QUESTION_DATA "https://slack.com/api/chat.postMessage"
+          curl --silent -X POST -H "Content-type: application/json; charset=utf-8" -H "Authorization: Bearer $SLACK_TOKEN" --data "$QUESTION_DATA" "https://slack.com/api/chat.postMessage"
           echo "IT IS DONE"
