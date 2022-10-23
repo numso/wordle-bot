@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - run: |
-          MSG=${{ inputs.number }}
+          MSG=${{ inputs.message }}
           CHANNEL=$(echo "${{ inputs.channel }}" | awk '{print $2}')
 
           QUESTION_DATA='{"text":"'"$MSG"'","channel":"'$CHANNEL'"}'
