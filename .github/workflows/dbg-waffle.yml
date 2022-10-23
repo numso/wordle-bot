@@ -18,12 +18,12 @@ env:
   BOT_ID: 'B03VB855JSY'
 
 jobs:
-  slack-wordle:
+  slack-waffle:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - run: |
-          MSG=${{ inputs.message }}
+          MSG="${{ inputs.message }}"
           CHANNEL=$(echo "${{ inputs.channel }}" | awk '{print $2}')
 
           QUESTION_DATA='{"text":"'"$MSG"'","channel":"'$CHANNEL'"}'
