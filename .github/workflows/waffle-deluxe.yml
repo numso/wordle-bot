@@ -2,7 +2,7 @@ name: Post Slack Waffle Deluxe
 
 on:
   schedule:
-    - cron: '10 0 * * 0'
+    - cron: '45 23 * * 1'
 
 env:
   SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
@@ -15,7 +15,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - run: |
-          WORDLE_NUMBER=$(curl --silent --head "https://wordle.dallin.pro/?date=$(TZ=MDT date +'%m/%d/%Y')" | grep x-days-from | awk '{print $2}' | tr -d '\r')
+          WORDLE_NUMBER=$(curl --silent --head "https://wordle.dallin.pro/?date=$(TZ=MST date +'%m/%d/%Y')" | grep x-days-from | awk '{print $2}' | tr -d '\r')
           NUMBER=$(((WORDLE_NUMBER - 337) / 7))
           QUESTION_DATA='{"text":"Waffle Deluxe '"$NUMBER"'","channel":"'$CHANNEL'"}'
           curl --silent -X POST -H "Content-type: application/json; charset=utf-8" -H "Authorization: Bearer $SLACK_TOKEN" --data "$QUESTION_DATA" "https://slack.com/api/chat.postMessage"
