@@ -2,7 +2,7 @@ name: Post Slack Waffle Deluxe
 
 on:
   schedule:
-    - cron: '45 23 * * 1'
+    - cron: '45 23 * * 0'
 
 env:
   SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
