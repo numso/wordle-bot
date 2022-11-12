@@ -15,7 +15,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - run: |
-          ANSWER=$(curl --silent "https://www.nytimes.com/svc/wordle/v2/$(TZ=HST date +'%Y-%m-%d').json" | jq .solution)
+          ANSWER=$(curl --silent "https://www.nytimes.com/svc/wordle/v2/$(TZ=HST date +'%Y-%m-%d').json" | jq -r .solution)
           NUMBER=$(curl --silent --head "https://wordle.dallin.pro/?date=$(TZ=UTC date +'%m/%d/%Y')" | grep x-days-from | awk '{print $2}' | tr -d '\r')
 
           MSG=$(curl --silent -H "Authorization: Bearer $SLACK_TOKEN" "https://slack.com/api/conversations.history?channel=$CHANNEL" | jq -c "[.messages[] | select(.bot_id == \"$BOT_ID\")][0]")
